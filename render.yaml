@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       DATABASE_URL: postgres://sih_user:sih_password@postgres.internal:5432/sih_db
       REDIS_URL: redis://redis.internal:6379/0
