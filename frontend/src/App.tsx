@@ -32,6 +32,7 @@ export function App() {
     { type: 'area', value: 280.0, details: 'Estimated building footprint area: 280.0 m²', timestamp: '10:07' },
   ]);
   const [confidenceFilter, setConfidenceFilter] = useState(0.40);
+  const [startingDemo, setStartingDemo] = useState(false);
 
   // 1. Initial health fetch
   useEffect(() => {
@@ -57,11 +58,15 @@ export function App() {
   }, [activeJob?.job_id, activeJob?.status]);
 
   const handleTriggerMock = async () => {
+    if (startingDemo) return;
+    setStartingDemo(true);
     try {
-      const mockJob = await createMockJob('SinglePass3D Synthetic Demo Survey');
+      const mockJob = await createMockJob('OnePass-3D Synthetic Demo Survey');
       setActiveJob(mockJob);
     } catch (err: any) {
       alert(`Could not start mock job: ${err.message}`);
+    } finally {
+      setStartingDemo(false);
     }
   };
 
@@ -98,7 +103,7 @@ export function App() {
       <Header
         health={health}
         onTriggerMock={handleTriggerMock}
-        isProcessing={activeJob ? !['completed', 'failed', 'cancelled'].includes(activeJob.status) : false}
+        isProcessing={startingDemo || (activeJob ? !['completed', 'failed', 'cancelled'].includes(activeJob.status) : false)}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
@@ -106,7 +111,7 @@ export function App() {
         <UploadSection
           onSubmit={handleUploadSubmit}
           onTriggerMock={handleTriggerMock}
-          isProcessing={activeJob ? !['completed', 'failed', 'cancelled'].includes(activeJob.status) : false}
+          isProcessing={startingDemo || (activeJob ? !['completed', 'failed', 'cancelled'].includes(activeJob.status) : false)}
         />
 
         {/* Pipeline Execution Tracker (Visible when a job is active or completed) */}
