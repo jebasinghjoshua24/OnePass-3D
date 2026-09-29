@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: onepass3d-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      DATABASE_URL: postgres://sih_user:sih_password@postgres.internal:5432/sih_db
+      REDIS_URL: redis://redis.internal:6379/0
+      CELERY_BROKER_URL: redis://redis.internal:6379/0
+      CELERY_RESULT_BACKEND: redis://redis.internal:6379/1
+      MINIO_ENDPOINT: minio.internal:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: sih-artifacts
+      USE_MINIO: "true"
+      STORAGE_DIR: ./storage
+      DEVICE: cpu
+      TARGET_HEIGHT: 720
+      TARGET_WIDTH: 1280
+      MAX_FPS: 3.0
+      SHARPNESS_THRESHOLD: 85.0
+      CONFIDENCE_THRESHOLD: 0.4
+    healthCheckPath: /health
+    autoDeploy: true

@@ -1,0 +1,17 @@
+celery>=5.3.6
+redis>=5.0.1
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.9
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+scipy>=1.11.0
+torch>=2.0.0
+torchvision>=0.15.0
+trimesh>=4.0.0
+pyproj>=3.6.0
+pillow>=10.0.0
+tifffile>=2023.7.10
+minio>=7.2.0
+requests>=2.31.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
