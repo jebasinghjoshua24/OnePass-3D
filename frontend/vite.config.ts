@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',  // GitHub Pages root
+  base: '/OnePass-3D/',  // GitHub Pages project site
   server: {
     host: '0.0.0.0',
     port: 3000,
